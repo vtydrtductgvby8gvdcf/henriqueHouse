@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Henrique - Consultas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #282c34;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(40, 44, 52, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(90deg, red, black, blue, darkviolet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        input, select {
+            padding: 10px;
+            margin: 10px 0;
+            width: 90%;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .menu, .resources {
+            display: none;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+        pre {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+        .result {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HENRIQUE CONSULTAS</h1>
+        <div id="loginForm">
+            <form onsubmit="handleLogin(event)">
+                <input type="text" name="username" placeholder="Usuário" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+
+        <div class="menu" id="menu">
+            <h2>Menu</h2>
+            <h2>Consultar Dados</h2>
+            <input type="text" id="nameInput" placeholder="Nome" />
+            <button onclick="consultByName()">Consultar Nome</button>
+            <div id="nameResult" class="result"></div>
+
+            <input type="text" id="cpfInput" placeholder="CPF" />
+            <button onclick="consultByCpf()">Consultar CPF</button>
+            <div id="cpfResult" class="result"></div>
+
+            <input type="text" id="motherInput" placeholder="Nome da Mãe" />
+            <button onclick="consultByMother()">Consultar Mãe</button>
+            <div id="motherResult" class="result"></div>
+
+            <input type="text" id="phoneInput" placeholder="Telefone" />
+            <button onclick="consultByPhone()">Consultar Telefone</button>
+            <div id="phoneResult" class="result"></div>
+
+            <h2>Gerador de Bot</h2>
+            <select id="botFunctionality">
+                <option value="">Escolha uma funcionalidade</option>
+                <option value="echo">Resposta Automática</option>
+                <option value="inline">Comandos Inline</option>
+            </select>
+            <button onclick="generateBotCode()">Gerar Código do Bot</button>
+            <pre id="botOutput"></pre>
+
+            <h2>Versículo da Bíblia</h2>
+            <button onclick="generateVerse()">Gerar Versículo</button>
+            <div id="verseResult" class="result"></div>
+
+            <h2>Mensagem Motivacional</h2>
+            <button onclick="generateMotivationalMessage()">Gerar Mensagem</button>
+            <div id="motivationalResult" class="result"></div>
+        </div>
+
+        <div class="resources" id="resources">
+            <h2>Recursos Úteis</h2>
+            <ul>
+                <li><a href="https://core.telegram.org/bots/api" target="_blank" style="color: #4CAF50;">Documentação da API do Telegram</a></li>
+                <li><a href="https://github.com/telegram-bot-sdk/telegram-bot-sdk" target="_blank" style="color: #4CAF50;">Telegram Bot SDK</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = event.target.username.value;
+            const password = event.target.password.value;
+
+            if (username === "henrique" && password === "2608") {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('menu').style.display = 'block';
+                document.getElementById('resources').style.display = 'block';
+                document.getElementById('menu').style.opacity = 1;
+                document.getElementById('resources').style.opacity = 1;
+            } else {
+                alert("Usuário ou senha incorretos.");
+            }
+        }
+
+        function generateVerse() {
+            const verses = [
+                "Filipenses 4:13 - Posso todas as coisas naquele que me fortalece.",
+                "Salmos 23:1 - O Senhor é o meu pastor, nada me faltará.",
+                "Romanos 8:28 - Todas as coisas cooperam para o bem daqueles que amam a Deus.",
+                "Isaías 41:10 - Não temas, pois eu sou contigo; não te assombres, pois eu sou teu Deus.",
+                "Salmos 46:1 - Deus é o nosso refúgio e a nossa fortaleza, socorro bem presente na angústia."
+            ];
+            const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+            document.getElementById('verseResult').innerHTML = randomVerse;
+        }
+
+        function generateMotivationalMessage() {
+            const messages = [
+                "Acredite em você e em suas capacidades!",
+                "Cada dia é uma nova oportunidade para mudar sua vida.",
+                "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+                "Não desista. Grandes coisas levam tempo.",
+                "Você é capaz de alcançar tudo o que deseja!"
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('motivationalResult').innerHTML = randomMessage;
+        }
+
+        function consultByName() {
+            const name = document.getElementById('nameInput').value;
+            fetch(https://cybhor-apis.online/query/credlinknome.php?token=tokenlol&query=${encodeURIComponent(name)})
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('nameResult').innerHTML = formatResult(data);
+                })
+                .catch(error => {
+                    document.getElementById('nameResult').innerHTML = 'Erro ao consultar nome.';
+                });
+        }
+
+        function consultByCpf() {
+            const cpf = document.getElementById('cpfInput').value;
+            fetch(https://cybhor-apis.online/query/credlinkcpf.php?token=tokenlol&query=${cpf})
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cpfResult').innerHTML = formatResult(data);
+                })
+                .catch(error => {
+                    document.getElementById('cpfResult').innerHTML = 'Erro ao consultar CPF.';
+                });
+        }
+
+        function consultByMother() {
+            const motherName = document.getElementById('motherInput').value;
+            document.getElementById('motherResult').innerHTML = 'Consulta para nome da mãe não implementada.';
+        }
+
+        function consultByPhone() {
+            const phone = document.getElementById('phoneInput').value;
+            fetch(https://cybhor-apis.online/query/credlinktelefone.php?token=tokenlol&query=${phone})
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('phoneResult').innerHTML = formatResult(data);
+                })
+                .catch(error => {
+                    document.getElementById('phoneResult').innerHTML = 'Erro ao consultar telefone.';
+                });
+        }
+
+        function formatResult(data) {
+            if (data.error) {
+                return <strong>Erro:</strong> ${data.error};
+            }
+            return <pre>${JSON.stringify(data, null, 2)}</pre>;
+        }
+
+        function generateBotCode() {
+            const functionality = document.getElementById('botFunctionality').value;
+            let botCode = '';
+
+            if (functionality === 'echo') {
+                botCode = `// Exemplo de Bot Echo
+bot.on('message', (msg) => {
+    bot.sendMessage(msg.chat.id, msg.text);
+});`;
+            } else if (functionality === 'inline') {
+                botCode = `// Exemplo de Comando Inline
+bot.onText(/\\/inline/, (msg) => {
+    bot.sendMessage(msg.chat.id, 'Clique no botão abaixo:', {
+        reply_markup: {
+            inline_keyboard: [[{ text: 'Clique Aqui', callback_data: 'clicked' }]]
+        }
+    });
+});`;
+            }
+
+            document.getElementById('botOutput').textContent = botCode;
+        }
+    </script>
+</body>
+</html>
